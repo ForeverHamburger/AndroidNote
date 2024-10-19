@@ -155,5 +155,32 @@ private void cancel() {
 
 ## 源码解析OkHttp
 
+首先来学习一下 OkHttp 的请求网络流程。
 
+### OkHttp的请求网络流程
+
+1. **从execute/enqueue开始分析。**
+
+当我们要请求网络的时候需要用 OkHttpClient.newCall(request)进行 execute 或者 enqueue 操 作；当调用 newCall 方法时，会调用如下代码：
+
+```java
+@Override
+public Call newCall(Request request) {
+	return new RealCall(this, request)；
+}
+```
+
+其实际返回的是一个RealCall类。我们调用 enqueue 异步请求网络实际上是调用了 RealCall 的 enqueue 方法。查看 RealCall 的 enqueue 方法，如下所示：
+
+```java
+void enqueue(Callback responseCallback, boolean forWebSocket) {
+	synchronized (this) {
+    	if (executed) throw new IllegalStateException(＂Already Executed＂)；
+    	executed = true；
+	}
+	client.dispatcher().enqueue(new AsyncCall(responseCallback, forWebSocket))；
+}
+```
+
+可以看到最终的请求是 dispatcher 来完成的，接下来就开始分析 dispatcher。
 
