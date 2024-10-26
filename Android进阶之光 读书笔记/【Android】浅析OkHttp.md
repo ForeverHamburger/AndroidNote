@@ -165,6 +165,12 @@ private void cancel() {
 
 首先创建出OkHttpClient，而后创建出Request对象，通过这两个对象，获取到Call对象。使用Call开始执行请求后，请求的任务会首先经过Dispatcher（分发器）进行任务的调配，而后Interceptors（拦截器）完成请求的过程。
 
+1. 通过建造者模式构建`OKHttpClient`与 `Request`
+2. `OKHttpClient`通过`newCall`发起一个新的请求
+3. 通过分发器维护请求队列与线程池，完成请求调配
+4. 通过五大默认拦截器完成请求重试，缓存处理，建立连接等一系列操作
+5. 得到网络请求结果
+
 > 分发器：内部维护队列以及线程池，完成请求调配。
 >
 > 拦截器：完成整个请求过程。
@@ -546,3 +552,9 @@ public HttpEngine recover(IOException e, Sink requestBodyOut) {
 通过最后一行可以看到，其就是重新创建了 HttpEngine 并返回，用来完成重连。 
 
 <img src="https://gitee.com/ForeverHamburger/picgo_imgs1/raw/master/202410200047186.png" alt="image-20241020004734089" style="zoom:50%;" />
+
+## 结语
+
+> 参考：
+>
+> [android - 【知识点】OkHttp 原理 8 连问 - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000041128356)

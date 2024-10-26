@@ -137,7 +137,7 @@ public class IpInfoPresenter implements IpInfoContract.Presenter, LoadTasksCallB
 }
 ```
 
-IpInfoPresenter 中含有 NetTask 和 IpInfoContract.View 的实例（后面会讲），并且实现了LoadTasksCallBack 接口。在上面代码注释 1 处，将自身传入 NetTask 的 execute 方法中来获取 数据，并回调给IpInfoPresenter，最后通过 addTaskView 来和 View 进行交互，并更改界面。这 回我们应该明白了：Presenter就是一个中间人的角色，其通过 NetTask，也就是 Model 层来获 得和保存数据，然后再通过 View 更新界面，这期间通过定义接口使得 View 和 Model 没有任何 交互。最后看看 View 层的实现。
+IpInfoPresenter 中含有 NetTask 和 IpInfoContract.View 的实例（后面会讲），并且实现了LoadTasksCallBack 接口。在上面代码注释 1 处，将自身传入 NetTask 的 execute 方法中来获取 数据，并回调给IpInfoPresenter，最后通过 addTaskView 来和 View 进行交互，并更改界面。Presenter就是一个中间人的角色，其通过 NetTask，也就是 Model 层来获 得和保存数据，然后再通过 View 更新界面，这期间通过定义接口使得 View 和 Model 没有任何 交互。最后看看 View 层的实现。
 
 ### 实现 View
 
@@ -223,3 +223,7 @@ public class IpInfoFragment extends Fragment implements IpInfoContract.View {
 上面的代码负责提交事务，将 Fragment 添加到 Activity 中。
 
 View 和 Model 之间没有联系，View 与 Presenter 通过接口进行交互， 并在 Activity 中进行相互注入。Model 层的 NetTask 在 Activity 中注入 Presenter，并等待 Presenter 调用。
+
+## 结语
+
+> 参考《Android进阶之光》
