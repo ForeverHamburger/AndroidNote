@@ -1,8 +1,10 @@
 # 【Android】组件化开发
 
-## 组件化介绍
+## 组件分层
 
-学习组件化之前，我们首先了解一下什么是模块化
+学习组件化之前，我们首先了解一下组件分层的概念。
+
+![image-20241204133223315](https://gitee.com/ForeverHamburger/picgo_imgs1/raw/master/202412041332466.png)
 
 
 
