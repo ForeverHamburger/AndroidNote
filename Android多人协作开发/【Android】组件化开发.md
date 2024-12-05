@@ -16,5 +16,3 @@
 > 4. 业务组件间 没有依赖，如何获取fragment实例？
 > 5. 业务组件不能反向依赖壳工程，如何获取Application实例、如何获取Application onCreate()回调（用于任务初始化）？
 
-## 
-
