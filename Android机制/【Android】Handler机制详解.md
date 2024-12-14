@@ -53,7 +53,7 @@ public class MyActivity extends AppCompatActivity {
 
 #### **使用静态内部类 + 弱引用**
 
-将`Handler`定义为静态内部类，并通过**弱引用**持有外部类的引用。这样可以避免`Handler`直接持有外部类的引用，防止内存泄漏。
+将`Handler`定义为静态内部类，并通过**弱引用**持有外部类的引用。这样可以避免`Handler`直接持有外部类的引用，防止内存泄漏
 
 ```java
 public class MyActivity extends AppCompatActivity {
