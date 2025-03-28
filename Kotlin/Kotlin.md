@@ -30,9 +30,9 @@ javac Main.java → 生成 Main.class（平台无关的字节码）
 
 ### 变量
 
-val（value的简写）用来声明一个不可变的变量，这种变量在初始赋值之后就再也不能重新赋值，对应J应Java中的final变量。
+val（value的简写）用来声明一个**不可变**的变量，这种变量在初始赋值之后就再也不能重新赋值，对应J应Java中的final变量。
 
-var（variable的简写）用来声明一个可变的变量，这种变量在初始赋值之后仍然可以再被重新赋值，对应J应Java中的非final变量。
+var（variable的简写）用来声明一个**可变**的变量，这种变量在初始赋值之后仍然可以再被重新赋值，对应J应Java中的非final变量。
 
 | Java 数据类型 | 包装类      | 大小（字节）                | Kotlin 数据类型 | 说明                                                         |
 | ------------- | ----------- | --------------------------- | --------------- | ------------------------------------------------------------ |
@@ -73,6 +73,8 @@ fun largerNumber(num1: Int, num2: Int) = max(num1, num2)
 
 ## 程序逻辑控制
 
+### if条件语句
+
 ```kotlin
 fun largerNumber(num1: Int, num2: Int): Int {
     var value = 0 if (num1 > num2) {
@@ -105,6 +107,138 @@ fun largerNumber(num1: Int, num2: Int): Int {
         num1 
     } else { 
         num2 
+    } 
+}
+```
+
+### when条件语句
+
+例如定义一个函数，接收一个学生姓名参数，再用if条件语句找到对应的分数返回。
+
+```kotlin
+fun getScore(name: String) = if (name == "Tom") { 
+    86 
+} else if (name == "Jim") {
+    77 
+} else if (name == "Jack") {
+    95 
+} else if (name == "Lily") { 
+    100 
+} else {
+    0 
+}
+```
+
+用when语句的话，就可以改写成这样：
+
+```kotlin
+fun getScore(name: String) = when (name) {
+    "Tom" -> 86 
+    "Jim" -> 77 
+    "Jack" -> 95 
+    "Lily" -> 100 
+    else -> 0 
+}
+```
+
+when语句允许传入一个任意类型的参数，然后可以在when的结构体中定义一系列的条件，格式是：
+
+```
+匹配值 -> { 执行逻辑 }
+```
+
+当执行逻辑只有一行代码时，{ }可以省略。
+
+除了精确匹配之外，when语句还允许进行类型匹配。
+
+```kotlin
+fun checkNumber(num: Number) { 
+    when (num) { 
+        is Int -> println("number is Int") 
+        is Double -> println("number is Double") 
+        else -> println("number not support") 
+    } 
+}
+```
+
+is关键字就是类型匹配的核心，相当于Java中的instanceof关键字。
+
+由于checkNumber()函数接收一个Number类型的参数，这是Kotlin内置的一个抽象类，像Int、Long、Float、Double等与数字相关的类都是它的子类，所以这里就可以使用类型匹配来判断传入的参数到底属于什么类型，如果是Int型或Double型，就将该类型打印出来，否则就打印不支持该参数的类型。
+
+when语句还有一种不带参数的用法，虽然这种用法可能不太常用，但有的时候却能发挥很强的扩展性。
+
+例如：
+
+```kotlin
+fun getScore(name: String) = when { 
+	name == "Tom" -> 86 
+    name == "Jim" -> 77 
+    name == "Jack" -> 95
+    name == "Lily" -> 100 
+    else -> 0 
+}
+```
+
+> Kotlin中判断字符串或对象是否相等可以直接使用==关键字，而不用像J像Java那样调用equals()方法。
+
+适用场景：
+
+> 假设所有名字以Tom开头的人，他的分数都是86分，这种场景如果用带参数的when语句来写就无法实现，而使用不带参数的when语句就可以这样写。
+
+```kotlin
+fun getScore(name: String) = when { 
+    name.startsWith("Tom") -> 86 
+    name == "Jim" -> 77 
+    name == "Jack" -> 95 
+    name == "Lily" -> 100 
+    else -> 0 
+}
+```
+
+### 循环语句
+
+区间的概念：
+
+```kotlin
+val range = 0..10
+```
+
+有了区间之后，我们就可以通过for-in循环来遍历这个区间，比如在main()函数中编写如下代码：
+
+```kotlin
+fun main() {
+    for (i in 0..10) {
+        println(i) 
+    }
+}
+```
+
+Kotlin中可以使用until关键字来创建一个左闭右开的区间，如下所示：
+
+```kotlin
+val range = 0 until 10
+```
+
+上述代码表示创建了一个0到10的左闭右开区间，它的数学表达方式是[0, 10)。修改main()函数中的代码，使用until替代..关键字。
+
+默认情况下，for-in循环每次执行循环时会在区间范围内递增1，相当于Java for-i循环中i++的效果，而如果你想跳过其中的一些元素，可以使用step关键字：
+
+```kotlin
+fun main() { 
+	for (i in 0 until 10 step 2) { 
+		println(i) 
+	} 
+}
+```
+
+上述代码表示在遍历[0, 10)这个区间的时候，每次执行循环都会在区间范围内递增2，相当于for-i循环中i = i + 2的效果。
+
+如果你想创建一个降序的区间，可以使用downTo关键字，用法如下：
+
+```kotlin
+fun main() { 
+    for (i in 10 downTo 1) { 
+        println(i) 
     } 
 }
 ```
